@@ -23,12 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Pages\Account\**\*.cshtml" />
+    <Content Remove="Pages\Account\**\*.cshtml" />
     <EmbeddedResource Include="Pages\SharedResources\**\*.cshtml" />
-    <EmbeddedResource Include="Pages\SharedResources\**\*.css" />
-    <EmbeddedResource Include="Pages\SharedResources\**\*.js" />
     <Content Remove="Pages\SharedResources\**\*.cshtml" />
-    <Content Remove="Pages\SharedResources\**\*.css" />
-    <Content Remove="Pages\SharedResources\**\*.js" />
   </ItemGroup>
 
   <ItemGroup>
