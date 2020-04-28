@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ModuleOverrideTest.Migrations
 {
-    public partial class Initial : Migration
+    public partial class AddedModule : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -353,6 +353,121 @@ namespace ModuleOverrideTest.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SharedResourcesCategories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ExtraProperties = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierId = table.Column<Guid>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    ParentCategoryId = table.Column<Guid>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    CustomMark = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SharedResourcesCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SharedResourcesCategoryOwners",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ExtraProperties = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierId = table.Column<Guid>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    TenantId = table.Column<Guid>(nullable: true),
+                    CategoryId = table.Column<Guid>(nullable: false),
+                    OwnerUserId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SharedResourcesCategoryOwners", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SharedResourcesResourceItems",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ExtraProperties = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierId = table.Column<Guid>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    ResourceId = table.Column<Guid>(nullable: false),
+                    ResourceItemType = table.Column<int>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    IsPublished = table.Column<bool>(nullable: false),
+                    IsPublic = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SharedResourcesResourceItems", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SharedResourcesResources",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ExtraProperties = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierId = table.Column<Guid>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    CategoryId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    PreviewMediaResources = table.Column<string>(nullable: true),
+                    IsPublished = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SharedResourcesResources", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SharedResourcesResourceUsers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ExtraProperties = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: true),
+                    TenantId = table.Column<Guid>(nullable: true),
+                    ResourceId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SharedResourcesResourceUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AbpAuditLogActions",
                 columns: table => new
                 {
@@ -541,7 +656,7 @@ namespace ModuleOverrideTest.Migrations
                 {
                     table.PrimaryKey("PK_IdentityServerApiClaims", x => new { x.ApiResourceId, x.Type });
                     table.ForeignKey(
-                        name: "FK_IdentityServerApiClaims_IdentityServerApiResources_ApiResourceId",
+                        name: "FK_IdentityServerApiClaims_IdentityServerApiResources_ApiResou~",
                         column: x => x.ApiResourceId,
                         principalTable: "IdentityServerApiResources",
                         principalColumn: "Id",
@@ -564,7 +679,7 @@ namespace ModuleOverrideTest.Migrations
                 {
                     table.PrimaryKey("PK_IdentityServerApiScopes", x => new { x.ApiResourceId, x.Name });
                     table.ForeignKey(
-                        name: "FK_IdentityServerApiScopes_IdentityServerApiResources_ApiResourceId",
+                        name: "FK_IdentityServerApiScopes_IdentityServerApiResources_ApiResou~",
                         column: x => x.ApiResourceId,
                         principalTable: "IdentityServerApiResources",
                         principalColumn: "Id",
@@ -585,7 +700,7 @@ namespace ModuleOverrideTest.Migrations
                 {
                     table.PrimaryKey("PK_IdentityServerApiSecrets", x => new { x.ApiResourceId, x.Type, x.Value });
                     table.ForeignKey(
-                        name: "FK_IdentityServerApiSecrets_IdentityServerApiResources_ApiResourceId",
+                        name: "FK_IdentityServerApiSecrets_IdentityServerApiResources_ApiReso~",
                         column: x => x.ApiResourceId,
                         principalTable: "IdentityServerApiResources",
                         principalColumn: "Id",
@@ -622,7 +737,7 @@ namespace ModuleOverrideTest.Migrations
                 {
                     table.PrimaryKey("PK_IdentityServerClientCorsOrigins", x => new { x.ClientId, x.Origin });
                     table.ForeignKey(
-                        name: "FK_IdentityServerClientCorsOrigins_IdentityServerClients_ClientId",
+                        name: "FK_IdentityServerClientCorsOrigins_IdentityServerClients_Clien~",
                         column: x => x.ClientId,
                         principalTable: "IdentityServerClients",
                         principalColumn: "Id",
@@ -640,7 +755,7 @@ namespace ModuleOverrideTest.Migrations
                 {
                     table.PrimaryKey("PK_IdentityServerClientGrantTypes", x => new { x.ClientId, x.GrantType });
                     table.ForeignKey(
-                        name: "FK_IdentityServerClientGrantTypes_IdentityServerClients_ClientId",
+                        name: "FK_IdentityServerClientGrantTypes_IdentityServerClients_Client~",
                         column: x => x.ClientId,
                         principalTable: "IdentityServerClients",
                         principalColumn: "Id",
@@ -658,7 +773,7 @@ namespace ModuleOverrideTest.Migrations
                 {
                     table.PrimaryKey("PK_IdentityServerClientIdPRestrictions", x => new { x.ClientId, x.Provider });
                     table.ForeignKey(
-                        name: "FK_IdentityServerClientIdPRestrictions_IdentityServerClients_ClientId",
+                        name: "FK_IdentityServerClientIdPRestrictions_IdentityServerClients_C~",
                         column: x => x.ClientId,
                         principalTable: "IdentityServerClients",
                         principalColumn: "Id",
@@ -676,7 +791,7 @@ namespace ModuleOverrideTest.Migrations
                 {
                     table.PrimaryKey("PK_IdentityServerClientPostLogoutRedirectUris", x => new { x.ClientId, x.PostLogoutRedirectUri });
                     table.ForeignKey(
-                        name: "FK_IdentityServerClientPostLogoutRedirectUris_IdentityServerClients_ClientId",
+                        name: "FK_IdentityServerClientPostLogoutRedirectUris_IdentityServerCl~",
                         column: x => x.ClientId,
                         principalTable: "IdentityServerClients",
                         principalColumn: "Id",
@@ -695,7 +810,7 @@ namespace ModuleOverrideTest.Migrations
                 {
                     table.PrimaryKey("PK_IdentityServerClientProperties", x => new { x.ClientId, x.Key });
                     table.ForeignKey(
-                        name: "FK_IdentityServerClientProperties_IdentityServerClients_ClientId",
+                        name: "FK_IdentityServerClientProperties_IdentityServerClients_Client~",
                         column: x => x.ClientId,
                         principalTable: "IdentityServerClients",
                         principalColumn: "Id",
@@ -713,7 +828,7 @@ namespace ModuleOverrideTest.Migrations
                 {
                     table.PrimaryKey("PK_IdentityServerClientRedirectUris", x => new { x.ClientId, x.RedirectUri });
                     table.ForeignKey(
-                        name: "FK_IdentityServerClientRedirectUris_IdentityServerClients_ClientId",
+                        name: "FK_IdentityServerClientRedirectUris_IdentityServerClients_Clie~",
                         column: x => x.ClientId,
                         principalTable: "IdentityServerClients",
                         principalColumn: "Id",
@@ -770,9 +885,34 @@ namespace ModuleOverrideTest.Migrations
                 {
                     table.PrimaryKey("PK_IdentityServerIdentityClaims", x => new { x.IdentityResourceId, x.Type });
                     table.ForeignKey(
-                        name: "FK_IdentityServerIdentityClaims_IdentityServerIdentityResources_IdentityResourceId",
+                        name: "FK_IdentityServerIdentityClaims_IdentityServerIdentityResource~",
                         column: x => x.IdentityResourceId,
                         principalTable: "IdentityServerIdentityResources",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SharedResourcesResourceItemContents",
+                columns: table => new
+                {
+                    ResourceItemId = table.Column<Guid>(nullable: false),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierId = table.Column<Guid>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    Content = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SharedResourcesResourceItemContents", x => x.ResourceItemId);
+                    table.ForeignKey(
+                        name: "FK_SharedResourcesResourceItemContents_SharedResourcesResource~",
+                        column: x => x.ResourceItemId,
+                        principalTable: "SharedResourcesResourceItems",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -812,7 +952,7 @@ namespace ModuleOverrideTest.Migrations
                 {
                     table.PrimaryKey("PK_IdentityServerApiScopeClaims", x => new { x.ApiResourceId, x.Name, x.Type });
                     table.ForeignKey(
-                        name: "FK_IdentityServerApiScopeClaims_IdentityServerApiScopes_ApiResourceId_Name",
+                        name: "FK_IdentityServerApiScopeClaims_IdentityServerApiScopes_ApiRes~",
                         columns: x => new { x.ApiResourceId, x.Name },
                         principalTable: "IdentityServerApiScopes",
                         principalColumns: new[] { "ApiResourceId", "Name" },
@@ -825,7 +965,7 @@ namespace ModuleOverrideTest.Migrations
                 column: "AuditLogId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AbpAuditLogActions_TenantId_ServiceName_MethodName_ExecutionTime",
+                name: "IX_AbpAuditLogActions_TenantId_ServiceName_MethodName_Executio~",
                 table: "AbpAuditLogActions",
                 columns: new[] { "TenantId", "ServiceName", "MethodName", "ExecutionTime" });
 
@@ -1044,6 +1184,21 @@ namespace ModuleOverrideTest.Migrations
                 name: "IdentityServerPersistedGrants");
 
             migrationBuilder.DropTable(
+                name: "SharedResourcesCategories");
+
+            migrationBuilder.DropTable(
+                name: "SharedResourcesCategoryOwners");
+
+            migrationBuilder.DropTable(
+                name: "SharedResourcesResourceItemContents");
+
+            migrationBuilder.DropTable(
+                name: "SharedResourcesResources");
+
+            migrationBuilder.DropTable(
+                name: "SharedResourcesResourceUsers");
+
+            migrationBuilder.DropTable(
                 name: "AbpEntityChanges");
 
             migrationBuilder.DropTable(
@@ -1063,6 +1218,9 @@ namespace ModuleOverrideTest.Migrations
 
             migrationBuilder.DropTable(
                 name: "IdentityServerIdentityResources");
+
+            migrationBuilder.DropTable(
+                name: "SharedResourcesResourceItems");
 
             migrationBuilder.DropTable(
                 name: "AbpAuditLogs");

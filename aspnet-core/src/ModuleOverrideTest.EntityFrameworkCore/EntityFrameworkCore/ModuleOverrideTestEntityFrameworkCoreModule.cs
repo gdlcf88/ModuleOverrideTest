@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
-using Volo.Abp.EntityFrameworkCore.SqlServer;
+using Volo.Abp.EntityFrameworkCore.PostgreSql;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.IdentityServer.EntityFrameworkCore;
@@ -20,7 +20,7 @@ namespace ModuleOverrideTest.EntityFrameworkCore
         typeof(AbpIdentityServerEntityFrameworkCoreModule),
         typeof(AbpPermissionManagementEntityFrameworkCoreModule),
         typeof(AbpSettingManagementEntityFrameworkCoreModule),
-        typeof(AbpEntityFrameworkCoreSqlServerModule),
+        typeof(AbpEntityFrameworkCorePostgreSqlModule),
         typeof(AbpBackgroundJobsEntityFrameworkCoreModule),
         typeof(AbpAuditLoggingEntityFrameworkCoreModule),
         typeof(AbpTenantManagementEntityFrameworkCoreModule),
@@ -47,7 +47,7 @@ namespace ModuleOverrideTest.EntityFrameworkCore
             {
                 /* The main point to change your DBMS.
                  * See also ModuleOverrideTestMigrationsDbContextFactory for EF Core tooling. */
-                options.UseSqlServer();
+                options.UsePostgreSql();
             });
         }
     }

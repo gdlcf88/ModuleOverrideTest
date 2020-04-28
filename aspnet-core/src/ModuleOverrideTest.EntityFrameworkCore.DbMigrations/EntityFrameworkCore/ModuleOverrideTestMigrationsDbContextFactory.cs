@@ -16,7 +16,7 @@ namespace ModuleOverrideTest.EntityFrameworkCore
             var configuration = BuildConfiguration();
 
             var builder = new DbContextOptionsBuilder<ModuleOverrideTestMigrationsDbContext>()
-                .UseSqlServer(configuration.GetConnectionString("Default"));
+                .UseNpgsql(configuration.GetConnectionString("Default"));
 
             return new ModuleOverrideTestMigrationsDbContext(builder.Options);
         }

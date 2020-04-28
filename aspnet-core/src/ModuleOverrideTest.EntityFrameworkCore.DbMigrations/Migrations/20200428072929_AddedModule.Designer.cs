@@ -2,121 +2,456 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ModuleOverrideTest.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace ModuleOverrideTest.Migrations
 {
     [DbContext(typeof(ModuleOverrideTestMigrationsDbContext))]
-    [Migration("20200106080719_Initial")]
-    partial class Initial
+    [Migration("20200428072929_AddedModule")]
+    partial class AddedModule
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.0")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
+                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            modelBuilder.Entity("EasyAbp.SharedResources.Categories.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnName("ConcurrencyStamp")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnName("CreationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnName("CreatorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CustomMark")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnName("DeleterId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnName("DeletionTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnName("ExtraProperties")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnName("LastModificationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnName("LastModifierId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("ParentCategoryId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SharedResourcesCategories");
+                });
+
+            modelBuilder.Entity("EasyAbp.SharedResources.CategoryOwners.CategoryOwner", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnName("ConcurrencyStamp")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnName("CreationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnName("CreatorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnName("DeleterId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnName("DeletionTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnName("ExtraProperties")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnName("LastModificationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnName("LastModifierId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("OwnerUserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnName("TenantId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SharedResourcesCategoryOwners");
+                });
+
+            modelBuilder.Entity("EasyAbp.SharedResources.ResourceItems.ResourceItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnName("ConcurrencyStamp")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnName("CreationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnName("CreatorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnName("DeleterId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnName("DeletionTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnName("ExtraProperties")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnName("LastModificationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnName("LastModifierId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ResourceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("ResourceItemType")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SharedResourcesResourceItems");
+                });
+
+            modelBuilder.Entity("EasyAbp.SharedResources.ResourceItems.ResourceItemContent", b =>
+                {
+                    b.Property<Guid>("ResourceItemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnName("CreationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnName("CreatorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnName("DeleterId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnName("DeletionTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnName("LastModificationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnName("LastModifierId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ResourceItemId");
+
+                    b.ToTable("SharedResourcesResourceItemContents");
+                });
+
+            modelBuilder.Entity("EasyAbp.SharedResources.ResourceUsers.ResourceUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnName("ConcurrencyStamp")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnName("CreationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnName("CreatorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnName("ExtraProperties")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("ResourceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("TenantId")
+                        .HasColumnName("TenantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SharedResourcesResourceUsers");
+                });
+
+            modelBuilder.Entity("EasyAbp.SharedResources.Resources.Resource", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnName("ConcurrencyStamp")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnName("CreationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnName("CreatorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnName("DeleterId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnName("DeletionTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnName("ExtraProperties")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("IsDeleted")
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnName("LastModificationTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnName("LastModifierId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("PreviewMediaResources")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SharedResourcesResources");
+                });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ApplicationName")
                         .HasColumnName("ApplicationName")
-                        .HasColumnType("nvarchar(96)")
+                        .HasColumnType("character varying(96)")
                         .HasMaxLength(96);
 
                     b.Property<string>("BrowserInfo")
                         .HasColumnName("BrowserInfo")
-                        .HasColumnType("nvarchar(512)")
+                        .HasColumnType("character varying(512)")
                         .HasMaxLength(512);
 
                     b.Property<string>("ClientId")
                         .HasColumnName("ClientId")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<string>("ClientIpAddress")
                         .HasColumnName("ClientIpAddress")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<string>("ClientName")
                         .HasColumnName("ClientName")
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("Comments")
                         .HasColumnName("Comments")
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .IsConcurrencyToken()
+                        .HasColumnName("ConcurrencyStamp")
+                        .HasColumnType("text");
 
                     b.Property<string>("CorrelationId")
                         .HasColumnName("CorrelationId")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<string>("Exceptions")
                         .HasColumnName("Exceptions")
-                        .HasColumnType("nvarchar(4000)")
+                        .HasColumnType("character varying(4000)")
                         .HasMaxLength(4000);
 
                     b.Property<int>("ExecutionDuration")
                         .HasColumnName("ExecutionDuration")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("ExecutionTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("HttpMethod")
                         .HasColumnName("HttpMethod")
-                        .HasColumnType("nvarchar(16)")
+                        .HasColumnType("character varying(16)")
                         .HasMaxLength(16);
 
                     b.Property<int?>("HttpStatusCode")
                         .HasColumnName("HttpStatusCode")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<Guid?>("ImpersonatorTenantId")
                         .HasColumnName("ImpersonatorTenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("ImpersonatorUserId")
                         .HasColumnName("ImpersonatorUserId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("TenantId")
                         .HasColumnName("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("TenantName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Url")
                         .HasColumnName("Url")
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<Guid?>("UserId")
                         .HasColumnName("UserId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("UserName")
                         .HasColumnName("UserName")
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -132,41 +467,42 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("AuditLogId")
                         .HasColumnName("AuditLogId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("ExecutionDuration")
                         .HasColumnName("ExecutionDuration")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("ExecutionTime")
                         .HasColumnName("ExecutionTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("MethodName")
                         .HasColumnName("MethodName")
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("Parameters")
                         .HasColumnName("Parameters")
-                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnType("character varying(2000)")
                         .HasMaxLength(2000);
 
                     b.Property<string>("ServiceName")
                         .HasColumnName("ServiceName")
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<Guid?>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnName("TenantId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -181,42 +517,42 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("AuditLogId")
                         .HasColumnName("AuditLogId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("ChangeTime")
                         .HasColumnName("ChangeTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<byte>("ChangeType")
                         .HasColumnName("ChangeType")
-                        .HasColumnType("tinyint");
+                        .HasColumnType("smallint");
 
                     b.Property<string>("EntityId")
                         .IsRequired()
                         .HasColumnName("EntityId")
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<Guid?>("EntityTenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("EntityTypeFullName")
                         .IsRequired()
                         .HasColumnName("EntityTypeFullName")
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("TenantId")
                         .HasColumnName("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -231,35 +567,36 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("EntityChangeId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("NewValue")
                         .HasColumnName("NewValue")
-                        .HasColumnType("nvarchar(512)")
+                        .HasColumnType("character varying(512)")
                         .HasMaxLength(512);
 
                     b.Property<string>("OriginalValue")
                         .HasColumnName("OriginalValue")
-                        .HasColumnType("nvarchar(512)")
+                        .HasColumnType("character varying(512)")
                         .HasMaxLength(512);
 
                     b.Property<string>("PropertyName")
                         .IsRequired()
                         .HasColumnName("PropertyName")
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("PropertyTypeFullName")
                         .IsRequired()
                         .HasColumnName("PropertyTypeFullName")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<Guid?>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnName("TenantId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -272,43 +609,45 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .IsConcurrencyToken()
+                        .HasColumnName("ConcurrencyStamp")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnName("CreationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsAbandoned")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
                     b.Property<string>("JobArgs")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("character varying(1048576)")
                         .HasMaxLength(1048576);
 
                     b.Property<string>("JobName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<DateTime?>("LastTryTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime>("NextTryTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<byte>("Priority")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("tinyint")
+                        .HasColumnType("smallint")
                         .HasDefaultValue((byte)15);
 
                     b.Property<short>("TryCount")
@@ -327,24 +666,24 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<string>("ProviderName")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.HasKey("Id");
@@ -358,44 +697,44 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnName("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsStatic")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("Regex")
-                        .HasColumnType("nvarchar(512)")
+                        .HasColumnType("character varying(512)")
                         .HasMaxLength(512);
 
                     b.Property<string>("RegexDescription")
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<bool>("Required")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("ValueType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -406,43 +745,44 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .IsRequired()
                         .HasColumnName("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDefault")
                         .HasColumnName("IsDefault")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsPublic")
                         .HasColumnName("IsPublic")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsStatic")
                         .HasColumnName("IsStatic")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<Guid?>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnName("TenantId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -454,22 +794,23 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.Identity.IdentityRoleClaim", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ClaimType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(1024)")
+                        .HasColumnType("character varying(1024)")
                         .HasMaxLength(1024);
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnName("TenantId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -482,132 +823,132 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("AccessFailedCount")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("AccessFailedCount")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasDefaultValue(0);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnName("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnName("CreationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnName("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("DeleterId")
                         .HasColumnName("DeleterId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnName("DeletionTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnName("Email")
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<bool>("EmailConfirmed")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("EmailConfirmed")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("IsDeleted")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnName("LastModificationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("LastModifierId")
                         .HasColumnName("LastModifierId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("LockoutEnabled")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("LockoutEnabled")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Name")
                         .HasColumnName("Name")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<string>("NormalizedEmail")
                         .IsRequired()
                         .HasColumnName("NormalizedEmail")
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("NormalizedUserName")
                         .IsRequired()
                         .HasColumnName("NormalizedUserName")
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash")
                         .HasColumnName("PasswordHash")
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnName("PhoneNumber")
-                        .HasColumnType("nvarchar(16)")
+                        .HasColumnType("character varying(16)")
                         .HasMaxLength(16);
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("PhoneNumberConfirmed")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
                     b.Property<string>("SecurityStamp")
                         .IsRequired()
                         .HasColumnName("SecurityStamp")
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("Surname")
                         .HasColumnName("Surname")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<Guid?>("TenantId")
                         .HasColumnName("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("TwoFactorEnabled")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnName("UserName")
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -626,22 +967,23 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUserClaim", b =>
                 {
                     b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ClaimType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(256)")
+                        .HasColumnType("character varying(256)")
                         .HasMaxLength(256);
 
                     b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(1024)")
+                        .HasColumnType("character varying(1024)")
                         .HasMaxLength(1024);
 
                     b.Property<Guid?>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnName("TenantId")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -653,23 +995,24 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUserLogin", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("ProviderKey")
                         .IsRequired()
-                        .HasColumnType("nvarchar(196)")
+                        .HasColumnType("character varying(196)")
                         .HasMaxLength(196);
 
                     b.Property<Guid?>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnName("TenantId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("UserId", "LoginProvider");
 
@@ -681,13 +1024,14 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUserRole", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnName("TenantId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -699,21 +1043,22 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUserToken", b =>
                 {
                     b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<Guid?>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnName("TenantId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
@@ -724,65 +1069,65 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnName("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnName("CreationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnName("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("DeleterId")
                         .HasColumnName("DeleterId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnName("DeletionTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnType("character varying(1000)")
                         .HasMaxLength(1000);
 
                     b.Property<string>("DisplayName")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<bool>("Enabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("IsDeleted")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnName("LastModificationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("LastModifierId")
                         .HasColumnName("LastModifierId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("Properties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -792,10 +1137,10 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.ApiResources.ApiResourceClaim", b =>
                 {
                     b.Property<Guid>("ApiResourceId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Type")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.HasKey("ApiResourceId", "Type");
@@ -806,28 +1151,28 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.ApiResources.ApiScope", b =>
                 {
                     b.Property<Guid>("ApiResourceId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnType("character varying(1000)")
                         .HasMaxLength(1000);
 
                     b.Property<string>("DisplayName")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<bool>("Emphasize")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("Required")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("ShowInDiscoveryDocument")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.HasKey("ApiResourceId", "Name");
 
@@ -837,14 +1182,14 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.ApiResources.ApiScopeClaim", b =>
                 {
                     b.Property<Guid>("ApiResourceId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("Type")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.HasKey("ApiResourceId", "Name", "Type");
@@ -855,22 +1200,22 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.ApiResources.ApiSecret", b =>
                 {
                     b.Property<Guid>("ApiResourceId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Type")
-                        .HasColumnType("nvarchar(250)")
+                        .HasColumnType("character varying(250)")
                         .HasMaxLength(250);
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(4000)")
+                        .HasColumnType("character varying(4000)")
                         .HasMaxLength(4000);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnType("character varying(2000)")
                         .HasMaxLength(2000);
 
                     b.Property<DateTime?>("Expiration")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("ApiResourceId", "Type", "Value");
 
@@ -881,170 +1226,170 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<int>("AbsoluteRefreshTokenLifetime")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("AccessTokenLifetime")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("AccessTokenType")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("AllowAccessTokensViaBrowser")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("AllowOfflineAccess")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("AllowPlainTextPkce")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("AllowRememberConsent")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("AlwaysIncludeUserClaimsInIdToken")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("AlwaysSendClientClaims")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("AuthorizationCodeLifetime")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("BackChannelLogoutSessionRequired")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("BackChannelLogoutUri")
-                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnType("character varying(2000)")
                         .HasMaxLength(2000);
 
                     b.Property<string>("ClientClaimsPrefix")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("ClientId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("ClientName")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("ClientUri")
-                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnType("character varying(2000)")
                         .HasMaxLength(2000);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnName("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("ConsentLifetime")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnName("CreationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnName("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("DeleterId")
                         .HasColumnName("DeleterId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnName("DeletionTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnType("character varying(1000)")
                         .HasMaxLength(1000);
 
                     b.Property<int>("DeviceCodeLifetime")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("EnableLocalLogin")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("Enabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("FrontChannelLogoutSessionRequired")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("FrontChannelLogoutUri")
-                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnType("character varying(2000)")
                         .HasMaxLength(2000);
 
                     b.Property<int>("IdentityTokenLifetime")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IncludeJwtId")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("IsDeleted")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnName("LastModificationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("LastModifierId")
                         .HasColumnName("LastModifierId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("LogoUri")
-                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnType("character varying(2000)")
                         .HasMaxLength(2000);
 
                     b.Property<string>("PairWiseSubjectSalt")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("ProtocolType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<int>("RefreshTokenExpiration")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("RefreshTokenUsage")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("RequireClientSecret")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("RequireConsent")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("RequirePkce")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<int>("SlidingRefreshTokenLifetime")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<bool>("UpdateAccessTokenClaimsOnRefresh")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("UserCodeType")
-                        .HasColumnType("nvarchar(100)")
+                        .HasColumnType("character varying(100)")
                         .HasMaxLength(100);
 
                     b.Property<int?>("UserSsoLifetime")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -1056,14 +1401,14 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientClaim", b =>
                 {
                     b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Type")
-                        .HasColumnType("nvarchar(250)")
+                        .HasColumnType("character varying(250)")
                         .HasMaxLength(250);
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(250)")
+                        .HasColumnType("character varying(250)")
                         .HasMaxLength(250);
 
                     b.HasKey("ClientId", "Type", "Value");
@@ -1074,10 +1419,10 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientCorsOrigin", b =>
                 {
                     b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Origin")
-                        .HasColumnType("nvarchar(150)")
+                        .HasColumnType("character varying(150)")
                         .HasMaxLength(150);
 
                     b.HasKey("ClientId", "Origin");
@@ -1088,10 +1433,10 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientGrantType", b =>
                 {
                     b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("GrantType")
-                        .HasColumnType("nvarchar(250)")
+                        .HasColumnType("character varying(250)")
                         .HasMaxLength(250);
 
                     b.HasKey("ClientId", "GrantType");
@@ -1102,10 +1447,10 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientIdPRestriction", b =>
                 {
                     b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Provider")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.HasKey("ClientId", "Provider");
@@ -1116,10 +1461,10 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientPostLogoutRedirectUri", b =>
                 {
                     b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("PostLogoutRedirectUri")
-                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnType("character varying(2000)")
                         .HasMaxLength(2000);
 
                     b.HasKey("ClientId", "PostLogoutRedirectUri");
@@ -1130,15 +1475,15 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientProperty", b =>
                 {
                     b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Key")
-                        .HasColumnType("nvarchar(250)")
+                        .HasColumnType("character varying(250)")
                         .HasMaxLength(250);
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnType("character varying(2000)")
                         .HasMaxLength(2000);
 
                     b.HasKey("ClientId", "Key");
@@ -1149,10 +1494,10 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientRedirectUri", b =>
                 {
                     b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("RedirectUri")
-                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnType("character varying(2000)")
                         .HasMaxLength(2000);
 
                     b.HasKey("ClientId", "RedirectUri");
@@ -1163,10 +1508,10 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientScope", b =>
                 {
                     b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Scope")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.HasKey("ClientId", "Scope");
@@ -1177,22 +1522,22 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.ClientSecret", b =>
                 {
                     b.Property<Guid>("ClientId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Type")
-                        .HasColumnType("nvarchar(250)")
+                        .HasColumnType("character varying(250)")
                         .HasMaxLength(250);
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(4000)")
+                        .HasColumnType("character varying(4000)")
                         .HasMaxLength(4000);
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(2000)")
+                        .HasColumnType("character varying(2000)")
                         .HasMaxLength(2000);
 
                     b.Property<DateTime?>("Expiration")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("ClientId", "Type", "Value");
 
@@ -1203,51 +1548,51 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ClientId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnName("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnName("CreationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnName("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Data")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("character varying(50000)")
                         .HasMaxLength(50000);
 
                     b.Property<string>("DeviceCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<DateTime?>("Expiration")
                         .IsRequired()
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("SubjectId")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("UserCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.HasKey("Id");
@@ -1266,42 +1611,44 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.Grants.PersistedGrant", b =>
                 {
                     b.Property<string>("Key")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("ClientId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .IsConcurrencyToken()
+                        .HasColumnName("ConcurrencyStamp")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Data")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("character varying(50000)")
                         .HasMaxLength(50000);
 
                     b.Property<DateTime?>("Expiration")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("SubjectId")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("Type")
                         .IsRequired()
-                        .HasColumnType("nvarchar(50)")
+                        .HasColumnType("character varying(50)")
                         .HasMaxLength(50);
 
                     b.HasKey("Key");
@@ -1316,10 +1663,10 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.IdentityResources.IdentityClaim", b =>
                 {
                     b.Property<Guid>("IdentityResourceId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Type")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.HasKey("IdentityResourceId", "Type");
@@ -1331,74 +1678,74 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnName("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnName("CreationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnName("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("DeleterId")
                         .HasColumnName("DeleterId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnName("DeletionTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(1000)")
+                        .HasColumnType("character varying(1000)")
                         .HasMaxLength(1000);
 
                     b.Property<string>("DisplayName")
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<bool>("Emphasize")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("Enabled")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("IsDeleted")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnName("LastModificationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("LastModifierId")
                         .HasColumnName("LastModifierId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(200)")
+                        .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
                     b.Property<string>("Properties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("Required")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("ShowInDiscoveryDocument")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 
@@ -1409,25 +1756,26 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("ProviderKey")
                         .IsRequired()
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<string>("ProviderName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<Guid?>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnName("TenantId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -1440,24 +1788,24 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(128)")
+                        .HasColumnType("character varying(128)")
                         .HasMaxLength(128);
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<string>("ProviderName")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("nvarchar(2048)")
+                        .HasColumnType("character varying(2048)")
                         .HasMaxLength(2048);
 
                     b.HasKey("Id");
@@ -1471,50 +1819,50 @@ namespace ModuleOverrideTest.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnName("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnName("CreationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("CreatorId")
                         .HasColumnName("CreatorId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("DeleterId")
                         .HasColumnName("DeleterId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("DeletionTime")
                         .HasColumnName("DeletionTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool>("IsDeleted")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("IsDeleted")
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnName("LastModificationTime")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid?>("LastModifierId")
                         .HasColumnName("LastModifierId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.HasKey("Id");
@@ -1527,20 +1875,29 @@ namespace ModuleOverrideTest.Migrations
             modelBuilder.Entity("Volo.Abp.TenantManagement.TenantConnectionString", b =>
                 {
                     b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(64)")
+                        .HasColumnType("character varying(64)")
                         .HasMaxLength(64);
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasColumnType("nvarchar(1024)")
+                        .HasColumnType("character varying(1024)")
                         .HasMaxLength(1024);
 
                     b.HasKey("TenantId", "Name");
 
                     b.ToTable("AbpTenantConnectionStrings");
+                });
+
+            modelBuilder.Entity("EasyAbp.SharedResources.ResourceItems.ResourceItemContent", b =>
+                {
+                    b.HasOne("EasyAbp.SharedResources.ResourceItems.ResourceItem", null)
+                        .WithOne("ResourceItemContent")
+                        .HasForeignKey("EasyAbp.SharedResources.ResourceItems.ResourceItemContent", "ResourceItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
